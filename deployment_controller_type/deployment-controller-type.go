@@ -6,5 +6,5 @@ type CreateDeploymentBody struct {
 }
 
 type DeploymentCreationResponse struct {
-	message string `json:"message"`
+	Message string `json:"message"`
 }

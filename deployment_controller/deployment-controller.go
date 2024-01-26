@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"kube-api-comms/deployment_controller_type"
 	"net/http"
-
+	// "kube-api-comms/deployment_type"
 	"github.com/gorilla/mux"
 )
 
@@ -26,10 +26,11 @@ func CreateDeployment(response http.ResponseWriter, request *http.Request) {
 
 	responseMessage := deployment_controller_type.DeploymentCreationResponse{Message: "The deployment has been created succesfuly."}
 
-	json.Marshal(responseMessage)
+	message,_ := json.Marshal(responseMessage)
 
-	response.Write(responseMessage)
+	response.Write(message)
 }
+
 
 func DeleteDeployment(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
@@ -37,9 +38,9 @@ func DeleteDeployment(response http.ResponseWriter, request *http.Request) {
 
 	deployment := mux.Vars(request)["deployment"]
 
-	responseMessage := deployment_controller_type.DeploymentCreationResponse{Message: "The deployment has been deleted succesfuly."}
+	responseMessage := deployment_controller_type.DeploymentCreationResponse{Message: "The deployment " +deployment+ " has been deleted succesfuly."}
 
-	json.Marshal(responseMessage)
+	message,_ := json.Marshal(responseMessage)
 
-	response.Write(responseMessage)
+	response.Write(message)
 }

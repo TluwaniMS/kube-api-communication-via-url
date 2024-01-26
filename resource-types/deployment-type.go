@@ -1,4 +1,4 @@
-package deployment-type 
+package deployment_type 
 
 type Deployment struct {
 	apiVersion string `json:"apiversion"`

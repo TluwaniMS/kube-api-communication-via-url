@@ -1,4 +1,4 @@
-package server-set-up
+package server_set_up
 
 func StartServer () {
 	PORT := os.Getenv("PORT")
@@ -6,6 +6,8 @@ func StartServer () {
 	if PORT == ""{
 		PORT = "3000"
 	}
+
+	router := ConfigureRoutes()
 
 	server := &http.Server{
 		Addr:           ":" + PORT,

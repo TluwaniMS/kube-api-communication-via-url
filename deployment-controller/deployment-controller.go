@@ -1,4 +1,4 @@
-package deployment-controller
+package deployment_controller
 
 import (
 	"net/http"

@@ -1,4 +1,4 @@
-package deployment-controller-type 
+package deployment_controller_type 
 
 type CreateDeploymentBody struct {
 	deploymentName string `json:"deploymentname"`

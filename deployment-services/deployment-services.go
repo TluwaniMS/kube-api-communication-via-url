@@ -1,7 +1,7 @@
 package deployment_service
 import ("kube-api-comms/deployment_type")
 
-func GenerateDeploymentObject (deployment string,replicas int,image string) {
+func GenerateDeploymentObject (deployment string,replicas int,image string) (deploymentObject deployment_type.Deployment){
 	deploymentObject := deployment_type.Deployment{
 		apiVersion: "apps/v1",
 		kind: "Deployment" ,
@@ -39,5 +39,5 @@ func GenerateDeploymentObject (deployment string,replicas int,image string) {
 		}
 	}
 
-	
+	return
 }

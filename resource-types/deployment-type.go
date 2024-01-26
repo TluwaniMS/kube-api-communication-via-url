@@ -1,8 +1,11 @@
+package deployment-type 
+
 type Deployment struct {
 	apiVersion string `json:"apiversion"`
 	kind       string `json:"kind"`
 	metadata   Metadata `json:"metadata"`
 	spec       Spec `json:"spec"`
+}
 
 type Metadata struct {
 	name   string `json:"name"`

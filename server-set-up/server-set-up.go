@@ -1,4 +1,5 @@
 package server_set_up
+import ("kube-api-comms/deployment_controller")
 
 func StartServer () {
 	PORT := os.Getenv("PORT")
@@ -24,10 +25,9 @@ func ConfigureRoutes() *mux.Router {
 	router := mux.NewRouter()
 
 	deploymentController := router.PathPrefix("/api/deployment-controller").Subrouter()
-
-	deploymentController.HandleFunc("/create-deployment", second_controller.PostHandler).Methods("POST")
-
-	deploymentController.HandleFunc("/{deployment}/", second_controller.DeletHandler).Methods("DELETE")
+	
+	deploymentController.HandleFunc("/create-deployment", deployment_controller.CreateDeployment).Methods("POST")
+	deploymentController.HandleFunc("/{deployment}/", deployment_controller.DeleteDeployment).Methods("DELETE")
 
 	log.Println("Router configuration has been completed successfuly.")
 

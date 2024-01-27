@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"fmt"
 )
 
 func GetClient() *http.Client {

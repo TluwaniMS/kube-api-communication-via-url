@@ -1,27 +1,23 @@
 package kube_api_requests
 
-import ("os")
+import "fmt"
 
-var KUBE_API = os.Getenv("KUBE_API")
-
-if KUBE_API == ""{
-	KUBE_API = "http://127.0.0.1:8001"
-}
+var KUBE_API = "http://127.0.0.1:8001"
 
 func GenerateGetDeploymentsApi(nameSpace string) string {
-	deploymentApi := KUBE_API + '/api/v1/' + nameSpace + '/deployment'
+	deploymentApi := fmt.Sprintf("%s/api/v1/namespaces/%s/pods", KUBE_API, nameSpace)
 
 	return deploymentApi
 }
 
-func GenerateCreateDeploymentApi(nameSpace string) string{
-	deploymentApi := KUBE_API + '/api/v1/' + nameSpace + '/deployment'
+func GenerateCreateDeploymentApi(nameSpace string) string {
+	deploymentApi := fmt.Sprintf("%s/api/v1/%s/deployment", KUBE_API, nameSpace)
 
 	return deploymentApi
 }
 
-func GenerateDeleteDeploymentApi(nameSpace string) string{
-	deploymentApi := KUBE_API + '/api/v1/' + nameSpace + '/deployment'
+func GenerateDeleteDeploymentApi(nameSpace string) string {
+	deploymentApi := fmt.Sprintf("%s/api/v1/%s/deployment", KUBE_API, nameSpace)
 
 	return deploymentApi
 }

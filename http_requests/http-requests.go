@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"fmt"
 )
 
 func GetClient() *http.Client {
@@ -13,7 +14,7 @@ func GetClient() *http.Client {
 }
 
 func GenerateGetRequest(endPoint string) *http.Request {
-	req, err := http.NewRequest(http.MethodGet, endPoint)
+	req, err := http.NewRequest(http.MethodGet, endPoint, nil)
 
 	if err != nil {
 		log.Fatalf("Error Occurred. %+v", err)

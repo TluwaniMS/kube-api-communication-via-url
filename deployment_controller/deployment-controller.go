@@ -7,6 +7,7 @@ import (
 	"kube-api-comms/deployment_controller_type"
 	"net/http"
 
+	"kube-api-comms/http_requests"
 	"kube-api-comms/kube_api_requests"
 	// "kube-api-comms/deployment_type"
 	"github.com/gorilla/mux"
@@ -51,6 +52,13 @@ func GetDeployments(response http.ResponseWriter, request *http.Request) {
 	response.WriteHeader(http.StatusOK)
 
 	namespace := mux.Vars(request)["namespace"]
+
+	kubeApiEndPoint := kube_api_requests.GenerateGetDeploymentsApi(namespace)
+	kubeRequest := http_requests.GenerateGetRequest(kubeApiEndPoint)
+
+	client := http_requests.GetClient()
+
+	http_requests.MakeHttpRequest(client,kubeRequest)
 
 	responseMessage := deployment_controller_type.DeploymentCreationResponse{Message: "The namespace " + namespace + " has been read succesfuly."}
 

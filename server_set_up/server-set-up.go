@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"time"
+
 	"github.com/gorilla/mux"
 )
 
@@ -36,6 +37,7 @@ func ConfigureRoutes() *mux.Router {
 
 	deploymentController.HandleFunc("/create-deployment", deployment_controller.CreateDeployment).Methods("POST")
 	deploymentController.HandleFunc("/{deployment}", deployment_controller.DeleteDeployment).Methods("DELETE")
+	deploymentController.HandleFunc("/{namespace}", deployment_controller.GetDeployments).Methods("GET")
 
 	log.Println("Router configuration has been completed successfuly.")
 

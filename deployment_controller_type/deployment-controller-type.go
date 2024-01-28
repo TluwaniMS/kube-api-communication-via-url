@@ -8,3 +8,7 @@ type CreateDeploymentBody struct {
 type DeploymentCreationResponse struct {
 	Message string `json:"message"`
 }
+
+type DeploymentGetResponse struct {
+	Deployments map[string]interface{} `json:"deployments"`
+}

@@ -9,6 +9,7 @@ import (
 
 	"kube-api-comms/http_requests"
 	"kube-api-comms/kube_api_requests"
+
 	// "kube-api-comms/deployment_type"
 	"github.com/gorilla/mux"
 )
@@ -58,9 +59,17 @@ func GetDeployments(response http.ResponseWriter, request *http.Request) {
 
 	client := http_requests.GetClient()
 
-	http_requests.MakeHttpRequest(client,kubeRequest)
+	kubeResponseBody := http_requests.MakeHttpRequest(client, kubeRequest)
 
-	responseMessage := deployment_controller_type.DeploymentCreationResponse{Message: "The namespace " + namespace + " has been read succesfuly."}
+	var kubeResponseObject map[string]interface{}
+
+	error := json.Unmarshal(kubeResponseBody, &kubeResponseObject)
+
+	if error != nil {
+		fmt.Println("There was an error unmarshalling the response body.")
+	}
+
+	responseMessage := deployment_controller_type.DeploymentGetResponse{Deployments: kubeResponseObject}
 
 	message, _ := json.Marshal(responseMessage)
 

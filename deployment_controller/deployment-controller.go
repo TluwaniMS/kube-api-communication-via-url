@@ -7,6 +7,7 @@ import (
 	"kube-api-comms/deployment_controller_type"
 	"net/http"
 
+	"kube-api-comms/deployment_service"
 	"kube-api-comms/http_requests"
 	"kube-api-comms/kube_api_requests"
 
@@ -27,6 +28,27 @@ func CreateDeployment(response http.ResponseWriter, request *http.Request) {
 	if error != nil {
 		fmt.Println("There was an error unmarshalling the body.")
 	}
+
+	deploymentObject := deployment_service.GenerateDeploymentObject(deploymentCreationBody.DeploymentName, deploymentCreationBody.Replicas)
+
+	client := http_requests.GetClient()
+
+	deploymentJsonObject, error := json.Marshal(deploymentObject)
+
+	if error != nil {
+		fmt.Println("There was an error marshalling the body.")
+	}
+
+	kubeApiEndPoint := kube_api_requests.GenerateGetDeploymentsApi(namespace)
+	kubeRequest := http_requests.GeneratePostRequest(kubeApiEndPoint, deploymentJsonObject)
+
+	kubeResponseBody := http_requests.MakeHttpRequest(client, kubeRequest)
+
+	var kubeResponseObject map[string]interface{}
+
+	error := json.Unmarshal(kubeResponseBody, &kubeResponseObject)
+
+	fmt.Println(kubeResponseObject)
 
 	responseMessage := deployment_controller_type.DeploymentCreationResponse{Message: "The deployment has been created succesfuly."}
 
@@ -54,7 +76,7 @@ func GetDeployments(response http.ResponseWriter, request *http.Request) {
 
 	namespace := mux.Vars(request)["namespace"]
 
-	kubeApiEndPoint := kube_api_requests.GenerateGetDeploymentsApi(namespace)
+	kubeApiEndPoint := kube_api_requests.GenerateGetDeploymentsApi("default")
 	kubeRequest := http_requests.GenerateGetRequest(kubeApiEndPoint)
 
 	client := http_requests.GetClient()

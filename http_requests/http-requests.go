@@ -22,7 +22,7 @@ func GenerateGetRequest(endPoint string) *http.Request {
 	return req
 }
 
-func GeneratePutRequest(client *http.Client, endPoint string, jsonData []byte) *http.Request {
+func GeneratePutRequest(endPoint string, jsonData []byte) *http.Request {
 	req, err := http.NewRequest(http.MethodPut, endPoint, bytes.NewBuffer(jsonData))
 
 	if err != nil {
@@ -32,7 +32,7 @@ func GeneratePutRequest(client *http.Client, endPoint string, jsonData []byte) *
 	return req
 }
 
-func GeneratePostRequest(client *http.Client, endPoint string, jsonData []byte) *http.Request {
+func GeneratePostRequest(endPoint string, jsonData []byte) *http.Request {
 	req, err := http.NewRequest(http.MethodPost, endPoint, bytes.NewBuffer(jsonData))
 
 	if err != nil {

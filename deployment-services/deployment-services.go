@@ -1,7 +1,7 @@
 package deployment_service
 import ("kube-api-comms/deployment_type")
 
-func GenerateDeploymentObject (deployment string,replicas int,image string) (deploymentObject deployment_type.Deployment){
+func GenerateDeploymentObject (deployment string,replicas int) (deploymentObject deployment_type.Deployment){
 	deploymentObject := deployment_type.Deployment{
 		ApiVersion: "apps/v1",
 		Kind: "Deployment" ,
@@ -28,7 +28,7 @@ func GenerateDeploymentObject (deployment string,replicas int,image string) (dep
 					Containers:[
 						{
 							Name: deployment + " - container",
-							Image: image,
+							Image: "busybox:stable",
 							Ports:[
 								{ContainerPort:8080}
 							]

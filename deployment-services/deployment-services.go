@@ -3,34 +3,34 @@ import ("kube-api-comms/deployment_type")
 
 func GenerateDeploymentObject (deployment string,replicas int,image string) (deploymentObject deployment_type.Deployment){
 	deploymentObject := deployment_type.Deployment{
-		apiVersion: "apps/v1",
-		kind: "Deployment" ,
-		metadata:{
-			name:deployment,
-			labels:{
-				app:"nginx"
+		ApiVersion: "apps/v1",
+		Kind: "Deployment" ,
+		Metadata:{
+			Name:deployment,
+			Labels:{
+				App:"nginx"
 			}
 		},
-		spec:{
-			replicas:replicas,
-			selector:{
-				matchLabels:{
-					app:"nginx"
+		Spec:{
+			Replicas:replicas,
+			Selector:{
+				MatchLabels:{
+					App:"nginx"
 				}
 			},
-			template:{
-				metadata:{
-					labels:{
-						app: "nginx"
+			Template:{
+				Metadata:{
+					Labels:{
+						App: "nginx"
 					}
 				},
-				spec:{
-					containers:[
+				Spec:{
+					Containers:[
 						{
-							name: deployment + " - container",
-							image: image,
-							ports:[
-								{containerPort:8080}
+							Name: deployment + " - container",
+							Image: image,
+							Ports:[
+								{ContainerPort:8080}
 							]
 						}
 					]

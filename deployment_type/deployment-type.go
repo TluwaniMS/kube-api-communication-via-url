@@ -1,46 +1,46 @@
 package deployment_type 
 
 type Deployment struct {
-	apiVersion string `json:"apiversion"`
-	kind       string `json:"kind"`
-	metadata   Metadata `json:"metadata"`
-	spec       Spec `json:"spec"`
+	ApiVersion string `json:"apiversion"`
+	Kind       string `json:"kind"`
+	Metadata   Metadata `json:"metadata"`
+	Spec       Spec `json:"spec"`
 }
 
 type Metadata struct {
-	name   string `json:"name"`
-	labels map[string]string `json:"labels"`
+	Name   string `json:"name"`
+	Labels map[string]string `json:"labels"`
 }
 
 type Spec struct {
-	replicas int `json:"replicas"`
-	selector Selector `json:"selector"`
-	template Template `json:"template"`
+	Replicas int `json:"replicas"`
+	Selector Selector `json:"selector"`
+	Template Template `json:"template"`
 }
 
 type Selector struct {
-	matchLabels map[string]string `json:"matchlabels"`
+	MatchLabels map[string]string `json:"matchlabels"`
 }
 
 type Template struct {
-	metadata TemplateMetadata `json:"metadata"`
-	spec     TemplateSpec `json:"spec"`
+	Metadata TemplateMetadata `json:"metadata"`
+	Spec     TemplateSpec `json:"spec"`
 }
 
 type TemplateMetadata struct {
-	labels map[string]string `json:"labels"`
+	Labels map[string]string `json:"labels"`
 }
 
 type TemplateSpec struct {
-	containers []Container `json:"containers"`
+	Containers []Container `json:"containers"`
 }
 
 type Container struct {
-	name  string `json:"name"`
-	image string `json:"image"`
-	ports []ContainerPort `json:"ports"`
+	Name  string `json:"name"`
+	Image string `json:"image"`
+	Ports []ContainerPort `json:"ports"`
 }
 
 type ContainerPort struct {
-	containerPort int `json:"containerport"`
+	ContainerPort int `json:"containerport"`
 }

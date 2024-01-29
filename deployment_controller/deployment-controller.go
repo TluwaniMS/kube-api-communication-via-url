@@ -39,16 +39,14 @@ func CreateDeployment(response http.ResponseWriter, request *http.Request) {
 		fmt.Println("There was an error marshalling the body.")
 	}
 
-	kubeApiEndPoint := kube_api_requests.GenerateGetDeploymentsApi(namespace)
+	kubeApiEndPoint := kube_api_requests.GenerateGetDeploymentsApi("default")
 	kubeRequest := http_requests.GeneratePostRequest(kubeApiEndPoint, deploymentJsonObject)
 
 	kubeResponseBody := http_requests.MakeHttpRequest(client, kubeRequest)
 
 	var kubeResponseObject map[string]interface{}
 
-	error := json.Unmarshal(kubeResponseBody, &kubeResponseObject)
-
-	fmt.Println(kubeResponseObject)
+	error = json.Unmarshal(kubeResponseBody, &kubeResponseObject)
 
 	responseMessage := deployment_controller_type.DeploymentCreationResponse{Message: "The deployment has been created succesfuly."}
 
@@ -76,7 +74,7 @@ func GetDeployments(response http.ResponseWriter, request *http.Request) {
 
 	namespace := mux.Vars(request)["namespace"]
 
-	kubeApiEndPoint := kube_api_requests.GenerateGetDeploymentsApi("default")
+	kubeApiEndPoint := kube_api_requests.GenerateGetDeploymentsApi(namespace)
 	kubeRequest := http_requests.GenerateGetRequest(kubeApiEndPoint)
 
 	client := http_requests.GetClient()

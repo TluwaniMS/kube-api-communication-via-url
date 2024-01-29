@@ -63,6 +63,21 @@ func DeleteDeployment(response http.ResponseWriter, request *http.Request) {
 
 	responseMessage := deployment_controller_type.DeploymentCreationResponse{Message: "The deployment " + deployment + " has been deleted succesfuly."}
 
+	client := http_requests.GetClient()
+
+	kubeApiEndPoint := kube_api_requests.GenerateDeleteDeploymentApi("default", deployment)
+	kubeRequest := http_requests.GenerateDeleteRequest(kubeApiEndPoint)
+
+	kubeResponseBody := http_requests.MakeHttpRequest(client, kubeRequest)
+
+	var kubeResponseObject map[string]interface{}
+
+	error := json.Unmarshal(kubeResponseBody, &kubeResponseObject)
+
+	if error != nil {
+		fmt.Println("There was an error unmarshalling the response body.")
+	}
+
 	message, _ := json.Marshal(responseMessage)
 
 	response.Write(message)

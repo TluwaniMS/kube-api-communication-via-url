@@ -42,6 +42,16 @@ func GeneratePostRequest(endPoint string, jsonData []byte) *http.Request {
 	return req
 }
 
+func GenerateDeleteRequest(endPoint string) *http.Request {
+	req, err := http.NewRequest(http.MethodDelete, endPoint, nil)
+
+	if err != nil {
+		log.Fatalf("Error Occurred. %+v", err)
+	}
+
+	return req
+}
+
 func MakeHttpRequest(client *http.Client, request *http.Request) []byte {
 	response, err := client.Do(request)
 

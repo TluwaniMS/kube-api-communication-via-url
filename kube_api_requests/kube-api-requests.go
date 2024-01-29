@@ -21,3 +21,9 @@ func GenerateDeleteDeploymentApi(nameSpace string, deploymentName string) string
 
 	return deploymentApi
 }
+
+func GeneratePutDeploymentApi(nameSpace string, deploymentName string) string {
+	deploymentApi := fmt.Sprintf("%s/apis/apps/v1/namespaces/%s/deployments/%s", KUBE_API, nameSpace, deploymentName)
+
+	return deploymentApi
+}

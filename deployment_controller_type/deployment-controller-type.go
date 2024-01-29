@@ -5,6 +5,12 @@ type CreateDeploymentBody struct {
 	Replicas       int    `json:"replicas"`
 }
 
+type PutDeploymentBody struct {
+	DeploymentName    string `json:"deploymentname"`
+	Replicas          int    `json:"replicas"`
+	NewDeploymentName string `json:"newdeploymentname"`
+}
+
 type DeploymentCreationResponse struct {
 	Message string `json:"message"`
 }

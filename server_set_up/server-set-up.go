@@ -36,6 +36,7 @@ func ConfigureRoutes() *mux.Router {
 	deploymentController := router.PathPrefix("/api/deployment-controller").Subrouter()
 
 	deploymentController.HandleFunc("/create-deployment", deployment_controller.CreateDeployment).Methods("POST")
+	deploymentController.HandleFunc("/update-deployment", deployment_controller.PutDeployment).Methods("PUT")
 	deploymentController.HandleFunc("/{deployment}", deployment_controller.DeleteDeployment).Methods("DELETE")
 	deploymentController.HandleFunc("/{namespace}", deployment_controller.GetDeployments).Methods("GET")
 

@@ -55,6 +55,48 @@ func CreateDeployment(response http.ResponseWriter, request *http.Request) {
 	response.Write(message)
 }
 
+func PutDeployment(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("Content-Type", "application/json")
+	response.WriteHeader(http.StatusOK)
+
+	body, _ := ioutil.ReadAll(request.Body)
+
+	var deploymentPutBody deployment_controller_type.PutDeploymentBody
+
+	error := json.Unmarshal(body, &deploymentPutBody)
+
+	if error != nil {
+		fmt.Println("There was an error unmarshalling the body.")
+	}
+
+	deploymentObject := deployment_service.GenerateDeploymentObject(deploymentPutBody.NewDeploymentName, deploymentPutBody.Replicas)
+
+	client := http_requests.GetClient()
+
+	deploymentJsonObject, error := json.Marshal(deploymentObject)
+
+	if error != nil {
+		fmt.Println("There was an error marshalling the body.")
+	}
+
+	kubeApiEndPoint := kube_api_requests.GeneratePutDeploymentApi("default",deploymentPutBody.DeploymentName)
+	kubeRequest := http_requests.GeneratePutRequest(kubeApiEndPoint, deploymentJsonObject)
+
+	kubeResponseBody := http_requests.MakeHttpRequest(client, kubeRequest)
+
+	var kubeResponseObject map[string]interface{}
+
+	error = json.Unmarshal(kubeResponseBody, &kubeResponseObject)
+
+	fmt.Println(kubeResponseObject)
+
+	responseMessage := deployment_controller_type.DeploymentCreationResponse{Message: "The deployment has been updated succesfuly."}
+
+	message, _ := json.Marshal(responseMessage)
+
+	response.Write(message)
+}
+
 func DeleteDeployment(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	response.WriteHeader(http.StatusOK)

@@ -8,7 +8,6 @@ type CreateDeploymentBody struct {
 type PutDeploymentBody struct {
 	DeploymentName    string `json:"deploymentname"`
 	Replicas          int    `json:"replicas"`
-	NewDeploymentName string `json:"newdeploymentname"`
 }
 
 type DeploymentCreationResponse struct {

@@ -69,7 +69,7 @@ func PutDeployment(response http.ResponseWriter, request *http.Request) {
 		fmt.Println("There was an error unmarshalling the body.")
 	}
 
-	deploymentObject := deployment_service.GenerateDeploymentObject(deploymentPutBody.NewDeploymentName, deploymentPutBody.Replicas)
+	deploymentObject := deployment_service.GenerateDeploymentObject(deploymentPutBody.DeploymentName, deploymentPutBody.Replicas)
 
 	client := http_requests.GetClient()
 

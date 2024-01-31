@@ -5,13 +5,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"kube-api-comms/deployment_controller_type"
-	"net/http"
-
 	"kube-api-comms/deployment_service"
 	"kube-api-comms/http_requests"
 	"kube-api-comms/kube_api_requests"
+	"net/http"
 
-	// "kube-api-comms/deployment_type"
 	"github.com/gorilla/mux"
 )
 
@@ -79,7 +77,7 @@ func PutDeployment(response http.ResponseWriter, request *http.Request) {
 		fmt.Println("There was an error marshalling the body.")
 	}
 
-	kubeApiEndPoint := kube_api_requests.GeneratePutDeploymentApi("default",deploymentPutBody.DeploymentName)
+	kubeApiEndPoint := kube_api_requests.GeneratePutDeploymentApi("default", deploymentPutBody.DeploymentName)
 	kubeRequest := http_requests.GeneratePutRequest(kubeApiEndPoint, deploymentJsonObject)
 
 	kubeResponseBody := http_requests.MakeHttpRequest(client, kubeRequest)

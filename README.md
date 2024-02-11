@@ -1,1 +1,1 @@
-# kube-api-communication-via-url
+# K8s communication via Http requests.

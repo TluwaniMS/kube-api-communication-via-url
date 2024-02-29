@@ -154,3 +154,32 @@ func GetDeployments(response http.ResponseWriter, request *http.Request) {
 
 	response.Write(message)
 }
+
+func GetDeployment(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("Content-Type", "application/json")
+	response.WriteHeader(http.StatusOK)
+
+	namespace := mux.Vars(request)["namespace"]
+	deployment := mux.Vars(request)["deployment"]
+
+	kubeApiEndPoint := kube_api_requests.GenerateDeploymentApi(namespace, deployment)
+	kubeRequest := http_requests.GenerateGetRequest(kubeApiEndPoint)
+
+	client := http_requests.GetClient()
+
+	kubeResponseBody := http_requests.MakeHttpRequest(client, kubeRequest)
+
+	var kubeResponseObject map[string]interface{}
+
+	error := json.Unmarshal(kubeResponseBody, &kubeResponseObject)
+
+	if error != nil {
+		fmt.Println("There was an error unmarshalling the response body.")
+	}
+
+	responseMessage := deployment_controller_type.DeploymentGetResponse{Deployments: kubeResponseObject}
+
+	message, _ := json.Marshal(responseMessage)
+
+	response.Write(message)
+}

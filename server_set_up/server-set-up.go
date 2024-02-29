@@ -39,6 +39,7 @@ func ConfigureRoutes() *mux.Router {
 	deploymentController.HandleFunc("/update-deployment", deployment_controller.PutDeployment).Methods("PUT")
 	deploymentController.HandleFunc("/{deployment}", deployment_controller.DeleteDeployment).Methods("DELETE")
 	deploymentController.HandleFunc("/{namespace}", deployment_controller.GetDeployments).Methods("GET")
+	deploymentController.HandleFunc("/{namespace}/{deployment}", deployment_controller.GetDeployment).Methods("GET")
 
 	log.Println("Router configuration has been completed successfuly.")
 

@@ -77,7 +77,7 @@ func PutDeployment(response http.ResponseWriter, request *http.Request) {
 		fmt.Println("There was an error marshalling the body.")
 	}
 
-	kubeApiEndPoint := kube_api_requests.GeneratePutDeploymentApi("default", deploymentPutBody.DeploymentName)
+	kubeApiEndPoint := kube_api_requests.GenerateDeploymentApi("default", deploymentPutBody.DeploymentName)
 	kubeRequest := http_requests.GeneratePutRequest(kubeApiEndPoint, deploymentJsonObject)
 
 	kubeResponseBody := http_requests.MakeHttpRequest(client, kubeRequest)
@@ -85,6 +85,10 @@ func PutDeployment(response http.ResponseWriter, request *http.Request) {
 	var kubeResponseObject map[string]interface{}
 
 	error = json.Unmarshal(kubeResponseBody, &kubeResponseObject)
+
+	if error != nil {
+		fmt.Println("There was an error unmarshalling the response body.")
+	}
 
 	fmt.Println(kubeResponseObject)
 
@@ -105,7 +109,7 @@ func DeleteDeployment(response http.ResponseWriter, request *http.Request) {
 
 	client := http_requests.GetClient()
 
-	kubeApiEndPoint := kube_api_requests.GenerateDeleteDeploymentApi("default", deployment)
+	kubeApiEndPoint := kube_api_requests.GenerateDeploymentApi("default", deployment)
 	kubeRequest := http_requests.GenerateDeleteRequest(kubeApiEndPoint)
 
 	kubeResponseBody := http_requests.MakeHttpRequest(client, kubeRequest)

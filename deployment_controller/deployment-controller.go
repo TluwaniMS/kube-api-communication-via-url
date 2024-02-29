@@ -3,7 +3,7 @@ package deployment_controller
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"kube-api-comms/deployment_controller_type"
 	"kube-api-comms/deployment_service"
 	"kube-api-comms/http_requests"
@@ -17,7 +17,7 @@ func CreateDeployment(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	response.WriteHeader(http.StatusOK)
 
-	body, _ := ioutil.ReadAll(request.Body)
+	body, _ := io.ReadAll(request.Body)
 
 	var deploymentCreationBody deployment_controller_type.CreateDeploymentBody
 
@@ -57,7 +57,7 @@ func PutDeployment(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	response.WriteHeader(http.StatusOK)
 
-	body, _ := ioutil.ReadAll(request.Body)
+	body, _ := io.ReadAll(request.Body)
 
 	var deploymentPutBody deployment_controller_type.PutDeploymentBody
 

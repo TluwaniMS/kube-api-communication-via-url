@@ -2,7 +2,7 @@ package http_requests
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 )
@@ -61,7 +61,7 @@ func MakeHttpRequest(client *http.Client, request *http.Request) []byte {
 
 	defer response.Body.Close()
 
-	body, err := ioutil.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		log.Fatalf("Couldn't parse response body. %+v", err)
 	}

@@ -21,3 +21,9 @@ func GenerateDeploymentApi(nameSpace string, deploymentName string) string {
 
 	return deploymentApi
 }
+
+func GenerateCrdApi(customResourceDefinition string) string {
+	crdApi := fmt.Sprintf("%s/apis/apiextensions.k8s.io/v1/customresourcedefinitions/%s", KUBE_API, customResourceDefinition)
+
+	return crdApi
+}

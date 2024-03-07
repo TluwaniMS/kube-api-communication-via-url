@@ -11,9 +11,6 @@ import (
 )
 
 func GetCrds(response http.ResponseWriter, request *http.Request) {
-	response.Header().Set("Content-Type", "application/json")
-	response.WriteHeader(http.StatusOK)
-
 	crd := mux.Vars(request)["customresource"]
 
 	client := http_requests.GetClient()

@@ -1,14 +1,14 @@
 package server_set_up
 
 import (
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
 	"kube-api-comms/crd_controller"
 	"kube-api-comms/deployment_controller"
 	"log"
 	"net/http"
 	"os"
 	"time"
-	"github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
 )
 
 func StartServer() {
@@ -20,7 +20,8 @@ func StartServer() {
 
 	router := ConfigureRoutes()
 
-	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
+	routerWithResponseSettingMiddleware := responseHeaderSetupMiddleware(router)
+	loggedRouter := handlers.LoggingHandler(os.Stdout, routerWithResponseSettingMiddleware)
 
 	server := &http.Server{
 		Addr:         ":" + PORT,
@@ -50,4 +51,12 @@ func ConfigureRoutes() *mux.Router {
 	log.Println("Router configuration has been completed successfuly.")
 
 	return router
+}
+
+func responseHeaderSetupMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
+		response.Header().Set("Content-Type", "application/json")
+		response.Header().Set("Access-Control-Allow-Origin", "*")
+		next.ServeHTTP(response, request)
+	})
 }

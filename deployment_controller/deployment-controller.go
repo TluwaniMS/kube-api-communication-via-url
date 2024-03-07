@@ -14,9 +14,6 @@ import (
 )
 
 func CreateDeployment(response http.ResponseWriter, request *http.Request) {
-	response.Header().Set("Content-Type", "application/json")
-	response.WriteHeader(http.StatusOK)
-
 	body, _ := io.ReadAll(request.Body)
 
 	var deploymentCreationBody deployment_controller_type.CreateDeploymentBody
@@ -54,9 +51,6 @@ func CreateDeployment(response http.ResponseWriter, request *http.Request) {
 }
 
 func PutDeployment(response http.ResponseWriter, request *http.Request) {
-	response.Header().Set("Content-Type", "application/json")
-	response.WriteHeader(http.StatusOK)
-
 	body, _ := io.ReadAll(request.Body)
 
 	var deploymentPutBody deployment_controller_type.PutDeploymentBody
@@ -100,9 +94,6 @@ func PutDeployment(response http.ResponseWriter, request *http.Request) {
 }
 
 func DeleteDeployment(response http.ResponseWriter, request *http.Request) {
-	response.Header().Set("Content-Type", "application/json")
-	response.WriteHeader(http.StatusOK)
-
 	deployment := mux.Vars(request)["deployment"]
 
 	responseMessage := deployment_controller_type.DeploymentCreationResponse{Message: "The deployment " + deployment + " has been deleted succesfuly."}
@@ -128,9 +119,6 @@ func DeleteDeployment(response http.ResponseWriter, request *http.Request) {
 }
 
 func GetDeployments(response http.ResponseWriter, request *http.Request) {
-	response.Header().Set("Content-Type", "application/json")
-	response.WriteHeader(http.StatusOK)
-
 	namespace := mux.Vars(request)["namespace"]
 
 	kubeApiEndPoint := kube_api_requests.GenerateGetDeploymentsApi(namespace)
@@ -156,9 +144,6 @@ func GetDeployments(response http.ResponseWriter, request *http.Request) {
 }
 
 func GetDeployment(response http.ResponseWriter, request *http.Request) {
-	response.Header().Set("Content-Type", "application/json")
-	response.WriteHeader(http.StatusOK)
-
 	namespace := mux.Vars(request)["namespace"]
 	deployment := mux.Vars(request)["deployment"]
 

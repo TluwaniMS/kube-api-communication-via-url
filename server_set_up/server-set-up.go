@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 	"time"
-
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -20,9 +20,11 @@ func StartServer() {
 
 	router := ConfigureRoutes()
 
+	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
+
 	server := &http.Server{
 		Addr:         ":" + PORT,
-		Handler:      router,
+		Handler:      loggedRouter,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
